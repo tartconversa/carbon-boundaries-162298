@@ -46,6 +46,12 @@ def read_table(path, table):
             seen.add(key)
     return result
 
+def digest(path):
+    """目录摘要按规范化的 CRLF 行尾计算，使检出与归档的行尾差异不影响核对。"""
+    raw = Path(path).read_bytes().replace(b"\r\n", b"\n")
+    return hashlib.sha256(raw.replace(b"\n", b"\r\n")).hexdigest()
+
+
 def inspect(root):
     """核对资料摘要及声明的引用关系。"""
     root = Path(root).resolve()
@@ -55,14 +61,14 @@ def inspect(root):
         path = (root / table["path"]).resolve()
         if not path.is_relative_to(root) or not path.is_file():
             raise ValueError("文件路径无效")
-        digest = hashlib.sha256(path.read_bytes()).hexdigest()
-        if digest != table["sha256"]:
+        digest_value = digest(path)
+        if digest_value != table["sha256"]:
             raise ValueError("资料摘要不一致：" + table["name"])
         data = read_table(path, table)
         if len(data) != table["row_count"]:
             raise ValueError("记录数不一致：" + table["name"])
         records[table["name"]] = data
-        report.append({"name": table["name"], "rows": len(data), "sha256": digest})
+        report.append({"name": table["name"], "rows": len(data), "sha256": digest_value})
     for table in catalog["tables"]:
         for reference in table.get("references", []):
             allowed = {r[reference["target_column"]] for r in records[reference["target_table"]]}
