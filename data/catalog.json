@@ -1,0 +1,430 @@
+{
+  "title": "生物质减排声明的边界与可分配证据",
+  "encoding": "UTF-8",
+  "delimiter": ",",
+  "missing": "",
+  "synthetic": true,
+  "tables": [
+    {
+      "name": "feedstock",
+      "description": "原料及加工运输共同投入。",
+      "columns": [
+        {
+          "name": "lot_id",
+          "type": "string",
+          "description": "原料批",
+          "nullable": true
+        },
+        {
+          "name": "wet_t",
+          "type": "number",
+          "description": "湿吨",
+          "nullable": true
+        },
+        {
+          "name": "moisture_pct",
+          "type": "number",
+          "description": "水分",
+          "nullable": true
+        },
+        {
+          "name": "processing_kwh",
+          "type": "number",
+          "description": "干燥加工用电",
+          "nullable": true
+        },
+        {
+          "name": "transport_km",
+          "type": "number",
+          "description": "运距",
+          "nullable": true
+        },
+        {
+          "name": "assumption_group",
+          "type": "string",
+          "description": "共享假设组",
+          "nullable": true
+        }
+      ],
+      "key": [
+        "lot_id"
+      ],
+      "references": [],
+      "path": "data/feedstock.csv",
+      "row_count": 8,
+      "sha256": "ee951cded466c96539af5c1dbbc2411469ea079b91544f39fdde6e66500ddea9"
+    },
+    {
+      "name": "baseline_options",
+      "description": "候选原用途及排放范围。factor 为每干吨二氧化碳当量。",
+      "columns": [
+        {
+          "name": "record_id",
+          "type": "string",
+          "description": "记录",
+          "nullable": true
+        },
+        {
+          "name": "lot_id",
+          "type": "string",
+          "description": "原料",
+          "nullable": true
+        },
+        {
+          "name": "use",
+          "type": "string",
+          "description": "原用途",
+          "nullable": true
+        },
+        {
+          "name": "share_min",
+          "type": "number",
+          "description": "最小份额",
+          "nullable": true
+        },
+        {
+          "name": "share_max",
+          "type": "number",
+          "description": "最大份额",
+          "nullable": true
+        },
+        {
+          "name": "factor_min",
+          "type": "number",
+          "description": "最小排放系数",
+          "nullable": true
+        },
+        {
+          "name": "factor_max",
+          "type": "number",
+          "description": "最大排放系数",
+          "nullable": true
+        }
+      ],
+      "key": [
+        "record_id"
+      ],
+      "references": [
+        {
+          "column": "lot_id",
+          "target_table": "feedstock",
+          "target_column": "lot_id"
+        }
+      ],
+      "path": "data/baseline_options.csv",
+      "row_count": 24,
+      "sha256": "421cfcac64c57fa34af58d6c26dab1733f94005281d4e9ea321b6c9115335a99"
+    },
+    {
+      "name": "outputs",
+      "description": "同一原料的多种联产产出，替代因子按单位计。",
+      "columns": [
+        {
+          "name": "output_id",
+          "type": "string",
+          "description": "产出",
+          "nullable": true
+        },
+        {
+          "name": "lot_id",
+          "type": "string",
+          "description": "原料",
+          "nullable": true
+        },
+        {
+          "name": "product",
+          "type": "string",
+          "description": "产品",
+          "nullable": true
+        },
+        {
+          "name": "unit",
+          "type": "string",
+          "description": "计量单位",
+          "nullable": true
+        },
+        {
+          "name": "quantity",
+          "type": "number",
+          "description": "可分配产出",
+          "nullable": true
+        },
+        {
+          "name": "substitute_factor",
+          "type": "number",
+          "description": "替代排放系数",
+          "nullable": true
+        },
+        {
+          "name": "energy_share",
+          "type": "number",
+          "description": "能量分配权重",
+          "nullable": true
+        },
+        {
+          "name": "value_share",
+          "type": "number",
+          "description": "价值分配权重",
+          "nullable": true
+        }
+      ],
+      "key": [
+        "output_id"
+      ],
+      "references": [
+        {
+          "column": "lot_id",
+          "target_table": "feedstock",
+          "target_column": "lot_id"
+        }
+      ],
+      "path": "data/outputs.csv",
+      "row_count": 24,
+      "sha256": "091451df8366b008a596294a5322ea3c483014f78c87030034b5c1550483f4be"
+    },
+    {
+      "name": "boundaries",
+      "description": "客户约定口径。energy、value 是分配依据，system 为全链替代；三者不当然可加。",
+      "columns": [
+        {
+          "name": "boundary_id",
+          "type": "string",
+          "description": "口径",
+          "nullable": true
+        },
+        {
+          "name": "allocation",
+          "type": "string",
+          "description": "分配约定",
+          "nullable": true
+        },
+        {
+          "name": "include_processing",
+          "type": "boolean",
+          "description": "计入加工",
+          "nullable": true
+        },
+        {
+          "name": "include_transport",
+          "type": "boolean",
+          "description": "计入运输",
+          "nullable": true
+        },
+        {
+          "name": "include_biogenic",
+          "type": "boolean",
+          "description": "计入生物源",
+          "nullable": true
+        },
+        {
+          "name": "horizon_years",
+          "type": "integer",
+          "description": "比较年限",
+          "nullable": true
+        }
+      ],
+      "key": [
+        "boundary_id"
+      ],
+      "references": [],
+      "path": "data/boundaries.csv",
+      "row_count": 3,
+      "sha256": "5c28b2e8a050c3f6e4c79b6a10cb5d6cfd942c40692b98f49141bef7829f73a4"
+    },
+    {
+      "name": "factors",
+      "description": "共同因子范围。transport 为每湿吨公里，grid 为每千瓦时，biogenic 为每干吨。",
+      "columns": [
+        {
+          "name": "factor_id",
+          "type": "string",
+          "description": "因子",
+          "nullable": true
+        },
+        {
+          "name": "assumption_group",
+          "type": "string",
+          "description": "共享组",
+          "nullable": true
+        },
+        {
+          "name": "kind",
+          "type": "string",
+          "description": "参数",
+          "nullable": true
+        },
+        {
+          "name": "min",
+          "type": "number",
+          "description": "下界",
+          "nullable": true
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "description": "上界",
+          "nullable": true
+        }
+      ],
+      "key": [
+        "factor_id"
+      ],
+      "references": [],
+      "path": "data/factors.csv",
+      "row_count": 9,
+      "sha256": "c856473af5386385e27e16796f1fe203a9aa1d0b526f14e4ae5445c5c2b50692"
+    },
+    {
+      "name": "claim_requests",
+      "description": "客户请求及历史业务状态，后续进入的请求在独立记录中。",
+      "columns": [
+        {
+          "name": "claim_id",
+          "type": "string",
+          "description": "声明",
+          "nullable": true
+        },
+        {
+          "name": "customer",
+          "type": "string",
+          "description": "客户",
+          "nullable": true
+        },
+        {
+          "name": "output_id",
+          "type": "string",
+          "description": "产出",
+          "nullable": true
+        },
+        {
+          "name": "boundary_id",
+          "type": "string",
+          "description": "边界",
+          "nullable": true
+        },
+        {
+          "name": "quantity",
+          "type": "number",
+          "description": "占用量",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "description": "reserved或issued",
+          "nullable": true
+        },
+        {
+          "name": "at",
+          "type": "datetime",
+          "description": "时间",
+          "nullable": true
+        }
+      ],
+      "key": [
+        "claim_id"
+      ],
+      "references": [
+        {
+          "column": "output_id",
+          "target_table": "outputs",
+          "target_column": "output_id"
+        },
+        {
+          "column": "boundary_id",
+          "target_table": "boundaries",
+          "target_column": "boundary_id"
+        }
+      ],
+      "path": "data/claim_requests.csv",
+      "row_count": 8,
+      "sha256": "c782284d18f6bc7beacca2ab64e5046a71e7f3835d5ca2132b1d14458a0e60de"
+    },
+    {
+      "name": "incoming",
+      "description": "竞争同一剩余量的业务请求。",
+      "columns": [
+        {
+          "name": "request_id",
+          "type": "string",
+          "description": "请求",
+          "nullable": true
+        },
+        {
+          "name": "output_id",
+          "type": "string",
+          "description": "产出",
+          "nullable": true
+        },
+        {
+          "name": "quantity",
+          "type": "number",
+          "description": "申请量",
+          "nullable": true
+        },
+        {
+          "name": "at",
+          "type": "datetime",
+          "description": "请求时刻",
+          "nullable": true
+        }
+      ],
+      "key": [
+        "request_id"
+      ],
+      "references": [
+        {
+          "column": "output_id",
+          "target_table": "outputs",
+          "target_column": "output_id"
+        }
+      ],
+      "path": "data/incoming.csv",
+      "row_count": 2,
+      "sha256": "0117e10625e3cfcf4ed0e7098c801ff249f2a0c3e9f63056f58786514a427759"
+    },
+    {
+      "name": "corrections",
+      "description": "新证据替换指定原用途份额界限；不能直接改写历史声明。",
+      "columns": [
+        {
+          "name": "correction_id",
+          "type": "string",
+          "description": "更正",
+          "nullable": true
+        },
+        {
+          "name": "record_id",
+          "type": "string",
+          "description": "对应原用途",
+          "nullable": true
+        },
+        {
+          "name": "share_min",
+          "type": "number",
+          "description": "新下界",
+          "nullable": true
+        },
+        {
+          "name": "share_max",
+          "type": "number",
+          "description": "新上界",
+          "nullable": true
+        },
+        {
+          "name": "available_at",
+          "type": "datetime",
+          "description": "可知时刻",
+          "nullable": true
+        }
+      ],
+      "key": [
+        "correction_id"
+      ],
+      "references": [],
+      "path": "data/corrections.csv",
+      "row_count": 2,
+      "sha256": "48927476e3080c6afcf10cf8fd7babd14fcb6402dbd0847f6b70ff2a9522cfc8"
+    }
+  ]
+}

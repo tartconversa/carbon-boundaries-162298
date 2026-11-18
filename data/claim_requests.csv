@@ -1,0 +1,9 @@
+claim_id,customer,output_id,boundary_id,quantity,status,at
+C1,U1,O1-1,B1,22,issued,2025-01-07T08:00:00+08:00
+C2,U2,O1-1,B2,22,reserved,2025-01-08T08:00:00+08:00
+C3,U3,O2-1,B1,22,issued,2025-01-09T08:00:00+08:00
+C4,U4,O2-1,B2,22,reserved,2025-01-10T08:00:00+08:00
+C5,U5,O3-1,B1,22,issued,2025-01-11T08:00:00+08:00
+C6,U6,O3-1,B2,22,reserved,2025-01-12T08:00:00+08:00
+C7,U7,O4-1,B1,22,issued,2025-01-13T08:00:00+08:00
+C8,U8,O4-1,B2,22,reserved,2025-01-14T08:00:00+08:00

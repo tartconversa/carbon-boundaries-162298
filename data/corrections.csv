@@ -1,0 +1,3 @@
+correction_id,record_id,share_min,share_max,available_at
+X1,L1-material,0.6,0.8,2025-02-01T08:00:00+08:00
+X2,L1-decay,0,0.3,2025-02-01T08:00:00+08:00

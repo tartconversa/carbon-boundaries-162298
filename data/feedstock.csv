@@ -1,0 +1,9 @@
+lot_id,wet_t,moisture_pct,processing_kwh,transport_km,assumption_group
+L1,110,23,462,22,G1
+L2,120,24,474,29,G1
+L3,130,25,486,36,G1
+L4,140,26,498,43,G2
+L5,150,27,510,50,G2
+L6,160,28,522,57,G2
+L7,170,29,534,64,G2
+L8,180,30,546,71,G3

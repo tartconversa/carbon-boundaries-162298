@@ -1,0 +1,10 @@
+factor_id,assumption_group,kind,min,max
+G1-transport,G1,transport,0.07,0.12
+G1-grid,G1,grid,0.45,0.7
+G1-biogenic,G1,biogenic,1400,1800
+G2-transport,G2,transport,0.07,0.12
+G2-grid,G2,grid,0.45,0.7
+G2-biogenic,G2,biogenic,1400,1800
+G3-transport,G3,transport,0.07,0.12
+G3-grid,G3,grid,0.45,0.7
+G3-biogenic,G3,biogenic,1400,1800

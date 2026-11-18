@@ -1,0 +1,4 @@
+boundary_id,allocation,include_processing,include_transport,include_biogenic,horizon_years
+B1,energy,true,true,false,20
+B2,value,true,true,true,20
+B3,system,true,true,false,100
